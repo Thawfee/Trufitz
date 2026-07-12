@@ -1,0 +1,222 @@
+@import "tailwindcss";
+
+/* Self-hosted variable fonts (no external fetch — faster, offline-safe) */
+@import "@fontsource-variable/bricolage-grotesque/index.css";
+@import "@fontsource-variable/hanken-grotesk/index.css";
+@import "@fontsource-variable/geist-mono/index.css";
+
+@theme {
+  --font-display: "Bricolage Grotesque Variable", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Hanken Grotesk Variable", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "Geist Mono Variable", ui-monospace, "SFMono-Regular", monospace;
+
+  /* Ink & Bone — warm monochrome with an oxidised-ember accent */
+  --color-ink: #0b0b0c;
+  --color-ink-soft: #131315;
+  --color-carbon: #1b1b1e;
+  --color-bone: #efeae1;
+  --color-bone-soft: #ddd6ca;
+  --color-stone: #9a938a;
+  --color-ember: #c04a2b;
+  --color-ember-deep: #9c3a20;
+
+  --radius-xs: 2px;
+  --radius-sm: 4px;
+}
+
+@layer base {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    @apply bg-ink text-bone antialiased min-h-screen;
+    font-family: var(--font-sans);
+    font-feature-settings: "ss01", "cv01";
+    letter-spacing: -0.006em;
+  }
+
+  ::selection {
+    background: var(--color-ember);
+    color: var(--color-bone);
+  }
+
+  a {
+    @apply text-inherit no-underline;
+  }
+
+  img {
+    display: block;
+    max-width: 100%;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-ember);
+    outline-offset: 2px;
+  }
+
+  h1, h2, h3, h4 {
+    font-family: var(--font-display);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    line-height: 0.98;
+  }
+
+  /* Custom scrollbar (dark) */
+  ::-webkit-scrollbar { width: 10px; height: 10px; }
+  ::-webkit-scrollbar-track { background: var(--color-ink); }
+  ::-webkit-scrollbar-thumb { background: #2a2a2d; border-radius: 999px; }
+  ::-webkit-scrollbar-thumb:hover { background: #37373b; }
+}
+
+@layer components {
+  /* Layout shell */
+  .u-container {
+    @apply mx-auto w-full max-w-[1400px] px-5 sm:px-8 lg:px-12;
+  }
+
+  /* Care-label mono eyebrow — the signature spec-sheet voice */
+  .eyebrow {
+    font-family: var(--font-mono);
+    @apply text-[10px] font-medium uppercase tracking-[0.32em] text-stone;
+  }
+  .eyebrow-bone { color: rgba(11, 11, 12, 0.5); }
+
+  /* Display headings */
+  .display-hero {
+    font-family: var(--font-display);
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    line-height: 0.9;
+    font-size: clamp(2.75rem, 8.5vw, 8rem);
+    text-transform: uppercase;
+  }
+  .display-title {
+    font-family: var(--font-display);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    line-height: 0.96;
+    font-size: clamp(2rem, 4.4vw, 3.75rem);
+    text-transform: uppercase;
+  }
+  .display-sub {
+    font-family: var(--font-display);
+    font-weight: 600;
+    letter-spacing: -0.015em;
+    font-size: clamp(1.5rem, 3vw, 2.25rem);
+    text-transform: uppercase;
+  }
+
+  .lede {
+    @apply text-[15px] leading-relaxed text-stone sm:text-base;
+    max-width: 46ch;
+    letter-spacing: 0;
+  }
+
+  /* Buttons — pill "hardware" */
+  .btn,
+  .btn-solid,
+  .btn-outline,
+  .btn-ink,
+  .btn-ember {
+    @apply inline-flex items-center justify-center gap-2 rounded-full px-7 py-3.5 text-[11px] font-semibold uppercase tracking-[0.2em] transition-all duration-300;
+    font-family: var(--font-sans);
+  }
+  .btn-solid {
+    @apply bg-bone text-ink hover:bg-white;
+  }
+  .btn-solid:hover { transform: translateY(-1px); }
+  .btn-outline {
+    @apply border border-bone/25 text-bone hover:border-bone/60 hover:bg-bone/[0.04];
+  }
+  .btn-ink {
+    @apply bg-ink text-bone hover:bg-carbon;
+  }
+  .btn-ember {
+    @apply text-bone;
+    background: var(--color-ember);
+  }
+  .btn-ember:hover { background: var(--color-ember-deep); transform: translateY(-1px); }
+
+  /* Surfaces */
+  .card,
+  .card-premium {
+    @apply rounded-[4px] border border-bone/10 bg-ink-soft;
+  }
+  .hairline { @apply border-t border-bone/10; }
+  .hairline-bone { border-top: 1px solid rgba(11, 11, 12, 0.12); }
+
+  /* Form field */
+  .field {
+    @apply w-full rounded-[3px] border border-bone/12 bg-bone/[0.03] px-4 py-3.5 text-sm text-bone outline-none transition-colors;
+    font-family: var(--font-sans);
+  }
+  .field::placeholder { @apply text-stone/70; }
+  .field:focus { border-color: rgba(239, 234, 225, 0.35); }
+
+  /* Chip / tag */
+  .chip {
+    font-family: var(--font-mono);
+    @apply inline-flex items-center gap-1.5 rounded-full border border-bone/15 px-3 py-1.5 text-[10px] uppercase tracking-[0.18em] text-bone/70;
+  }
+
+  /* Section eyebrow with index rule */
+  .label-rule {
+    @apply flex items-center gap-3;
+  }
+  .label-rule::before {
+    content: "";
+    @apply block h-px w-8 bg-ember;
+  }
+
+  .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+  .scrollbar-hide::-webkit-scrollbar { display: none; }
+}
+
+@layer utilities {
+  /* Marquee — drop-culture ticker */
+  .marquee {
+    display: flex;
+    width: max-content;
+    animation: marquee 40s linear infinite;
+  }
+  .marquee-fast { animation-duration: 24s; }
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  /* Film-grain / paper texture overlay (print-lookbook signature) */
+  .grain {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    pointer-events: none;
+    opacity: 0.04;
+    mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  .text-balance { text-wrap: balance; }
+  .text-pretty { text-wrap: pretty; }
+
+  /* Image tone: subtle desaturation for editorial cohesion */
+  .img-editorial { filter: grayscale(0.12) contrast(1.02); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+  .marquee { animation: none !important; }
+}
